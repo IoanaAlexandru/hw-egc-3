@@ -5,7 +5,7 @@ using namespace std;
 
 #include <Core/Engine.h>
 
-#include <Laboratoare/LabList.h>
+#include <Laboratoare/Laborator9/Laborator9.h>
 
 int main(int argc, char **argv)
 {

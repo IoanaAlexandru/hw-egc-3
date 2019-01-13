@@ -17,6 +17,10 @@ void TextureManager::Init()
 	LoadTexture(RESOURCE_PATH::TEXTURES, "noise.png");
 	LoadTexture(RESOURCE_PATH::TEXTURES, "random.jpg");
 	LoadTexture(RESOURCE_PATH::TEXTURES, "particle.png");
+	LoadTexture(RESOURCE_PATH::TEXTURES, "crate.jpg");
+	LoadTexture(RESOURCE_PATH::TEXTURES, "earth.png");
+	LoadTexture(RESOURCE_PATH::TEXTURES, "grass_bilboard.png");
+	LoadTexture(RESOURCE_PATH::TEXTURES, "bamboo.png");
 }
 
 //TextureManager::~TextureManager()
