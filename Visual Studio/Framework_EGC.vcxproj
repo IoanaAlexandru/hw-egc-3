@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\city\city.cpp" />
     <ClCompile Include="..\Source\Component\CameraInput.cpp" />
     <ClCompile Include="..\Source\Component\SceneInput.cpp" />
     <ClCompile Include="..\Source\Component\SimpleScene.cpp" />
@@ -33,10 +34,10 @@
     <ClCompile Include="..\Source\Core\Window\WindowObject.cpp" />
     <ClCompile Include="..\Source\Core\World.cpp" />
     <ClCompile Include="..\Source\include\gl.cpp" />
-    <ClCompile Include="..\Source\Laboratoare\Laborator9\Laborator9.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Source\city\city.h" />
     <ClInclude Include="..\Source\Component\CameraInput.h" />
     <ClInclude Include="..\Source\Component\SceneInput.h" />
     <ClInclude Include="..\Source\Component\SimpleScene.h" />
@@ -55,11 +56,10 @@
     <ClInclude Include="..\Source\include\glm.h" />
     <ClInclude Include="..\Source\include\math.h" />
     <ClInclude Include="..\Source\include\utils.h" />
-    <ClInclude Include="..\Source\Laboratoare\Laborator9\Laborator9.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Source\Laboratoare\Laborator9\Shaders\FragmentShader.glsl" />
-    <None Include="..\Source\Laboratoare\Laborator9\Shaders\VertexShader.glsl" />
+    <None Include="..\Source\city\Shaders\FragmentShader.glsl" />
+    <None Include="..\Source\city\Shaders\VertexShader.glsl" />
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

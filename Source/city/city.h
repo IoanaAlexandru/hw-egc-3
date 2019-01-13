@@ -3,10 +3,10 @@
 #include <Component/Transform/Transform.h>
 #include <Core/GPU/Mesh.h>
 
-class Laborator9 : public SimpleScene {
+class City : public SimpleScene {
  public:
-  Laborator9();
-  ~Laborator9();
+  City();
+  ~City();
 
   void Init() override;
 
@@ -16,8 +16,10 @@ class Laborator9 : public SimpleScene {
   void FrameEnd() override;
 
   void RenderSimpleMesh(Mesh* mesh, Shader* shader,
-                        const glm::mat4& modelMatrix, bool rotate,
+                        const glm::mat4& modelMatrix,
                         Texture2D* texture = NULL);
+  std::vector<std::vector<bool>> CreateMap(int dimensions, int max_streets,
+                                           int max_length);
   Texture2D* CreateRandomTexture(unsigned int width, unsigned int height);
 
   void OnInputUpdate(float deltaTime, int mods) override;
@@ -28,4 +30,6 @@ class Laborator9 : public SimpleScene {
   void OnMouseBtnRelease(int mouseX, int mouseY, int button, int mods) override;
   void OnMouseScroll(int mouseX, int mouseY, int offsetX, int offsetY) override;
   void OnWindowResize(int width, int height) override;
+
+  std::vector<std::vector<bool>> map;
 };

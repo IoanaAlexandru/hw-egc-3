@@ -16,17 +16,14 @@
     <Filter Include="Core\GPU">
       <UniqueIdentifier>{271e5bd2-7cb3-40b7-b2e5-5e343c58f910}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Laboratoare">
-      <UniqueIdentifier>{a73d11aa-9a42-4f7c-ba61-adefedb1e0cf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Managers">
       <UniqueIdentifier>{2940a1fd-9fef-46a7-93fb-a8241118d00a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Laboratoare\Laborator9">
-      <UniqueIdentifier>{72722bbc-d126-4745-97fb-990fffedc3f5}</UniqueIdentifier>
+    <Filter Include="city">
+      <UniqueIdentifier>{6d76d363-8d01-4e01-9809-9c9a2965ee62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Laboratoare\Laborator9\Shaders">
-      <UniqueIdentifier>{a7995ec9-7a24-4990-8d42-92088d9a6dfb}</UniqueIdentifier>
+    <Filter Include="city\shaders">
+      <UniqueIdentifier>{66bd91ef-cc41-40b1-9953-610d40d22176}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -73,8 +70,8 @@
     <ClCompile Include="..\Source\Component\SceneInput.cpp">
       <Filter>Component</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Laboratoare\Laborator9\Laborator9.cpp">
-      <Filter>Laboratoare\Laborator9</Filter>
+    <ClCompile Include="..\Source\city\city.cpp">
+      <Filter>city</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -132,17 +129,17 @@
     <ClInclude Include="..\Source\Component\SceneInput.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Laboratoare\Laborator9\Laborator9.h">
-      <Filter>Laboratoare\Laborator9</Filter>
+    <ClInclude Include="..\Source\city\city.h">
+      <Filter>city</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Source\Laboratoare\Laborator9\Shaders\FragmentShader.glsl">
-      <Filter>Laboratoare\Laborator9\Shaders</Filter>
-    </None>
-    <None Include="..\Source\Laboratoare\Laborator9\Shaders\VertexShader.glsl">
-      <Filter>Laboratoare\Laborator9\Shaders</Filter>
-    </None>
     <None Include="ClassDiagram.cd" />
+    <None Include="..\Source\city\Shaders\FragmentShader.glsl">
+      <Filter>city\shaders</Filter>
+    </None>
+    <None Include="..\Source\city\Shaders\VertexShader.glsl">
+      <Filter>city\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
