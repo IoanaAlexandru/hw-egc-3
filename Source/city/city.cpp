@@ -33,7 +33,7 @@ void City::Init() {
   }
 
   {
-    map = CreateMap(25, 150, 100);
+    map = CreateMap();
     for (auto row : map) {
       for (auto pos : row) {
         if (pos) {
@@ -44,6 +44,8 @@ void City::Init() {
       }
       std::cout << std::endl;
     }
+
+    GetSceneCamera()->SetPosition(glm::vec3(kMapSize / 2, 1, kMapSize / 2));
   }
 }
 
@@ -58,8 +60,8 @@ void City::FrameStart() {
 }
 
 void City::Update(float deltaTimeSeconds) {
-  for (auto i = 0; i < map.size(); i++) {
-    for (auto j = 0; j < map[i].size(); j++) {
+  for (int i = 0; i < map.size(); i++) {
+    for (int j = 0; j < map[i].size(); j++) {
       glm::mat4 modelMatrix = glm::mat4(1);
       modelMatrix = glm::translate(modelMatrix, glm::vec3(i, 0, j));
 
@@ -77,7 +79,7 @@ void City::Update(float deltaTimeSeconds) {
   }
 }
 
-void City::FrameEnd() { DrawCoordinatSystem(); }
+void City::FrameEnd() {}
 
 void City::RenderSimpleMesh(Mesh* mesh, Shader* shader,
                             const glm::mat4& modelMatrix, Texture2D* texture) {
@@ -115,12 +117,15 @@ void City::RenderSimpleMesh(Mesh* mesh, Shader* shader,
                  GL_UNSIGNED_SHORT, 0);
 }
 
-std::vector<std::vector<bool>> City::CreateMap(int dimensions, int max_streets,
-                                               int max_length) {
+std::vector<std::vector<bool>> City::CreateMap() {
+  int dimensions = kMapSize, max_streets = kMaxStreets,
+      max_length = kMaxStreetLength;
   auto map = std::vector<std::vector<bool>>(
       dimensions, std::vector<bool>(dimensions, true));
-  int current_row = rand() % dimensions;
-  int current_col = rand() % dimensions;
+
+  // Start from center
+  int current_row = kMapSize / 2;
+  int current_col = kMapSize / 2;
 
   std::vector<std::pair<int, int>> directions;
   directions.emplace_back(-1, 0);

@@ -18,8 +18,7 @@ class City : public SimpleScene {
   void RenderSimpleMesh(Mesh* mesh, Shader* shader,
                         const glm::mat4& modelMatrix,
                         Texture2D* texture = NULL);
-  std::vector<std::vector<bool>> CreateMap(int dimensions, int max_streets,
-                                           int max_length);
+  std::vector<std::vector<bool>> CreateMap();
   Texture2D* CreateRandomTexture(unsigned int width, unsigned int height);
 
   void OnInputUpdate(float deltaTime, int mods) override;
@@ -32,4 +31,5 @@ class City : public SimpleScene {
   void OnWindowResize(int width, int height) override;
 
   std::vector<std::vector<bool>> map;
+  const int kMapSize = 50, kMaxStreets = 150, kMaxStreetLength = 200;
 };
