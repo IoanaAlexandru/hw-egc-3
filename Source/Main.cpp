@@ -1,8 +1,6 @@
 #include <ctime>
 #include <iostream>
 
-using namespace std;
-
 #include <Core/Engine.h>
 
 #include <city/city.h>
@@ -19,7 +17,7 @@ int main(int argc, char **argv) {
   WindowObject *window = Engine::Init(wp);
 
   // Create a new 3D world and start running it
-  World *world = new City();
+  World *world = new newvegas::City();
   world->Init();
   world->Run();
 

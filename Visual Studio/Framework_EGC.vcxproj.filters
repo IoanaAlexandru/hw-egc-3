@@ -132,6 +132,9 @@
     <ClInclude Include="..\Source\city\city.h">
       <Filter>city</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\city\object.h">
+      <Filter>city</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

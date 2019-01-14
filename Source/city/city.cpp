@@ -6,8 +6,7 @@
 
 #include <Core/Engine.h>
 
-using namespace std;
-
+namespace newvegas {
 City::City() {}
 
 City::~City() {}
@@ -32,6 +31,7 @@ void City::Init() {
     shaders[shader->GetName()] = shader;
   }
 
+  // Create map and place camera in the middle
   {
     map = CreateMap();
     for (auto row : map) {
@@ -47,6 +47,60 @@ void City::Init() {
 
     GetSceneCamera()->SetPosition(glm::vec3(kMapSize / 2, 1, kMapSize / 2));
   }
+
+  // Init textures to choose randomly from
+  {
+    textures.push_back(TextureManager::GetTexture("building1.jpg"));
+    textures.push_back(TextureManager::GetTexture("building2.jpg"));
+    textures.push_back(TextureManager::GetTexture("building3.jpg"));
+    textures.push_back(TextureManager::GetTexture("building4.jpg"));
+    textures.push_back(TextureManager::GetTexture("building5.jpg"));
+  }
+
+  {
+    for (int i = 0; i < map.size(); i++) {
+      for (int j = 0; j < map[i].size(); j++) {
+        glm::mat4 model_matrix = glm::mat4(1);
+        model_matrix = glm::translate(model_matrix, glm::vec3(i, 0, j));
+
+        if (map[i][j] == 1) {
+          Texture2D* texture = textures.at(rand() % textures.size());
+          CreateBuilding(texture, i, j);
+        } else if (map[i][j] == 0) {
+          Texture2D* texture = TextureManager::GetTexture("asphalt.jpg");
+          model_matrix = glm::scale(model_matrix, glm::vec3(1, 0.1, 1));
+          objects.push_back(new Object(
+              "building_" + std::to_string(i) + "_" + std::to_string(j),
+              RESOURCE_PATH::MODELS + "Primitives", "box.obj", texture,
+              model_matrix));
+          map[i][j] = 2;
+        }
+      }
+    }
+  }
+}
+
+void City::CreateBuilding(Texture2D* texture, int pos_x, int pos_y) {
+  if (pos_x < 0 || pos_x >= kMapSize || pos_y < 0 || pos_y >= kMapSize) return;
+  if (map[pos_x][pos_y] != 1) return;
+
+  float random_height = rand() % 4 + 1;
+  for (float i = 0.5; i < random_height; i++) {
+    glm::mat4 model_matrix = glm::mat4(1);
+    model_matrix = glm::translate(model_matrix,
+                                  glm::vec3(pos_x, i, pos_y));
+
+    objects.push_back(new Object(
+        "building_" + std::to_string(pos_x) + "_" + std::to_string(pos_y),
+        RESOURCE_PATH::MODELS + "Primitives", "box.obj", texture,
+        model_matrix));
+  }
+  map[pos_x][pos_y] = 2;
+
+  CreateBuilding(texture, pos_x + 1, pos_y);
+  CreateBuilding(texture, pos_x - 1, pos_y);
+  CreateBuilding(texture, pos_x, pos_y + 1);
+  CreateBuilding(texture, pos_x, pos_y - 1);
 }
 
 void City::FrameStart() {
@@ -60,22 +114,9 @@ void City::FrameStart() {
 }
 
 void City::Update(float deltaTimeSeconds) {
-  for (int i = 0; i < map.size(); i++) {
-    for (int j = 0; j < map[i].size(); j++) {
-      glm::mat4 modelMatrix = glm::mat4(1);
-      modelMatrix = glm::translate(modelMatrix, glm::vec3(i, 0, j));
-
-      if (map[i][j]) {
-        modelMatrix = glm::translate(modelMatrix, glm::vec3(0, 2, 0));
-        modelMatrix = glm::scale(modelMatrix, glm::vec3(1, 4, 1));
-        RenderSimpleMesh(meshes["box"], shaders["CityShader"], modelMatrix,
-                         TextureManager::GetTexture("building4.jpg"));
-      } else {
-        modelMatrix = glm::scale(modelMatrix, glm::vec3(1, 0.1, 1));
-        RenderSimpleMesh(meshes["box"], shaders["CityShader"], modelMatrix,
-                         TextureManager::GetTexture("asphalt.jpg"));
-      }
-    }
+  for (auto o : objects) {
+    RenderSimpleMesh((Mesh*)o, shaders["CityShader"], o->GetModelMatrix(),
+                     o->GetTexture());
   }
 }
 
@@ -117,11 +158,11 @@ void City::RenderSimpleMesh(Mesh* mesh, Shader* shader,
                  GL_UNSIGNED_SHORT, 0);
 }
 
-std::vector<std::vector<bool>> City::CreateMap() {
+std::vector<std::vector<int>> City::CreateMap() {
   int dimensions = kMapSize, max_streets = kMaxStreets,
       max_length = kMaxStreetLength;
-  auto map = std::vector<std::vector<bool>>(
-      dimensions, std::vector<bool>(dimensions, true));
+  auto map = std::vector<std::vector<int>>(dimensions,
+                                           std::vector<int>(dimensions, 1));
 
   // Start from center
   int current_row = kMapSize / 2;
@@ -151,7 +192,7 @@ std::vector<std::vector<bool>> City::CreateMap() {
           ((current_col == dimensions - 1) && (random_direction.second == 1))) {
         break;
       } else {
-        map[current_row][current_col] = false;
+        map[current_row][current_col] = 0;
         current_row += random_direction.first;
         current_col += random_direction.second;
         street_length++;
@@ -238,3 +279,4 @@ void City::OnMouseBtnRelease(int mouseX, int mouseY, int button, int mods) {
 void City::OnMouseScroll(int mouseX, int mouseY, int offsetX, int offsetY) {}
 
 void City::OnWindowResize(int width, int height) {}
+}  // namespace newvegas
