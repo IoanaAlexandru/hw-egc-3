@@ -23,6 +23,11 @@ void TextureManager::Init() {
   LoadTexture(RESOURCE_PATH::TEXTURES, "asphalt.jpg");
   LoadTexture(RESOURCE_PATH::TEXTURES, "grass.jpg");
 
+  LoadTexture(RESOURCE_PATH::TEXTURES, "bark.png");
+  LoadTexture(RESOURCE_PATH::TEXTURES, "bark.jpg");
+  LoadTexture(RESOURCE_PATH::TEXTURES, "leaf.png");
+  LoadTexture(RESOURCE_PATH::TEXTURES, "palm.png");
+
   LoadTexture(RESOURCE_PATH::TEXTURES, "building1.jpg");
   LoadTexture(RESOURCE_PATH::TEXTURES, "building2.jpg");
   LoadTexture(RESOURCE_PATH::TEXTURES, "building3.jpg");

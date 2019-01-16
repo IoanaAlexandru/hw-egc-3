@@ -119,10 +119,25 @@ void City::CreatePark(Texture2D* texture, int pos_x, int pos_y) {
       "park_" + std::to_string(pos_x) + "_" + std::to_string(pos_y),
       RESOURCE_PATH::MODELS + "Primitives", "box.obj", texture, model_matrix));
   if (rand() % 10 < 3) {
-    objects.push_back(new Object(
-        "tree_" + std::to_string(pos_x) + "_" + std::to_string(pos_y),
-        RESOURCE_PATH::MODELS + "Vegetation/Bamboo/", "bamboo.obj",
-        TextureManager::GetTexture("bamboo.png"), glm::scale(pos_matrix, glm::vec3(0.05, 0.05, 0.05))));
+    if (rand() % 10 <= 5) {
+      objects.push_back(new Object(
+          "tree_trunk_" + std::to_string(pos_x) + "_" + std::to_string(pos_y),
+          RESOURCE_PATH::MODELS + "Vegetation", "trunk.obj",
+          TextureManager::GetTexture("bark.jpg"),
+          glm::scale(pos_matrix, glm::vec3(0.1, 0.1, 0.1))));
+    } else if (rand() % 10 <= 5) {
+      objects.push_back(new Object(
+          "tree_" + std::to_string(pos_x) + "_" + std::to_string(pos_y),
+          RESOURCE_PATH::MODELS + "Vegetation", "bush.obj",
+          TextureManager::GetTexture("palm.png"),
+          glm::scale(pos_matrix, glm::vec3(0.005, 0.005, 0.005))));
+    } else {
+      objects.push_back(new Object(
+          "tree_" + std::to_string(pos_x) + "_" + std::to_string(pos_y),
+          RESOURCE_PATH::MODELS + "Vegetation/Bamboo/", "bamboo.obj",
+          TextureManager::GetTexture("bamboo.png"),
+          glm::scale(pos_matrix, glm::vec3(0.05, 0.05, 0.05))));
+    }
   }
   map[pos_x][pos_y] = 2;
 
