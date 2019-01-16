@@ -64,13 +64,18 @@ void City::Init() {
         model_matrix = glm::translate(model_matrix, glm::vec3(i, 0, j));
 
         if (map[i][j] == 1) {
-          Texture2D* texture = textures.at(rand() % textures.size());
-          CreateBuilding(texture, i, j);
+          if (rand() % 10 > 1) {
+            Texture2D* texture = textures.at(rand() % textures.size());
+            CreateBuilding(texture, i, j);
+          } else {
+            Texture2D* texture = TextureManager::GetTexture("grass.jpg");
+            CreatePark(texture, i, j);
+          }
         } else if (map[i][j] == 0) {
           Texture2D* texture = TextureManager::GetTexture("asphalt.jpg");
           model_matrix = glm::scale(model_matrix, glm::vec3(1, 0.1, 1));
           objects.push_back(new Object(
-              "building_" + std::to_string(i) + "_" + std::to_string(j),
+              "street_" + std::to_string(i) + "_" + std::to_string(j),
               RESOURCE_PATH::MODELS + "Primitives", "box.obj", texture,
               model_matrix));
           map[i][j] = 2;
@@ -87,8 +92,7 @@ void City::CreateBuilding(Texture2D* texture, int pos_x, int pos_y) {
   float random_height = rand() % 4 + 1;
   for (float i = 0.5; i < random_height; i++) {
     glm::mat4 model_matrix = glm::mat4(1);
-    model_matrix = glm::translate(model_matrix,
-                                  glm::vec3(pos_x, i, pos_y));
+    model_matrix = glm::translate(model_matrix, glm::vec3(pos_x, i, pos_y));
 
     objects.push_back(new Object(
         "building_" + std::to_string(pos_x) + "_" + std::to_string(pos_y),
@@ -102,6 +106,31 @@ void City::CreateBuilding(Texture2D* texture, int pos_x, int pos_y) {
   CreateBuilding(texture, pos_x, pos_y + 1);
   CreateBuilding(texture, pos_x, pos_y - 1);
 }
+
+void City::CreatePark(Texture2D* texture, int pos_x, int pos_y) {
+  if (pos_x < 0 || pos_x >= kMapSize || pos_y < 0 || pos_y >= kMapSize) return;
+  if (map[pos_x][pos_y] != 1) return;
+
+  glm::mat4 pos_matrix = glm::mat4(1);
+  pos_matrix = glm::translate(pos_matrix, glm::vec3(pos_x, 0, pos_y));
+  glm::mat4 model_matrix = glm::scale(pos_matrix, glm::vec3(1, 0.05, 1));
+
+  objects.push_back(new Object(
+      "park_" + std::to_string(pos_x) + "_" + std::to_string(pos_y),
+      RESOURCE_PATH::MODELS + "Primitives", "box.obj", texture, model_matrix));
+  if (rand() % 10 < 3) {
+    objects.push_back(new Object(
+        "tree_" + std::to_string(pos_x) + "_" + std::to_string(pos_y),
+        RESOURCE_PATH::MODELS + "Vegetation/Bamboo/", "bamboo.obj",
+        TextureManager::GetTexture("bamboo.png"), glm::scale(pos_matrix, glm::vec3(0.05, 0.05, 0.05))));
+  }
+  map[pos_x][pos_y] = 2;
+
+  CreatePark(texture, pos_x + 1, pos_y);
+  CreatePark(texture, pos_x - 1, pos_y);
+  CreatePark(texture, pos_x, pos_y + 1);
+  CreatePark(texture, pos_x, pos_y - 1);
+}  // namespace newvegas
 
 void City::FrameStart() {
   // clears the color buffer (using the previously set color) and depth buffer

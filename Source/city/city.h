@@ -18,6 +18,8 @@ class City : public SimpleScene {
 
   void CreateBuilding(Texture2D* texture, int pos_x, int pos_y);
 
+  void CreatePark(Texture2D* texture, int pos_x, int pos_y);
+
  private:
   void FrameStart() override;
   void Update(float deltaTimeSeconds) override;

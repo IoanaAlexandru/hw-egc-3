@@ -21,6 +21,7 @@ void TextureManager::Init() {
   LoadTexture(RESOURCE_PATH::TEXTURES, "grass_bilboard.png");
   LoadTexture(RESOURCE_PATH::TEXTURES, "bamboo.png");
   LoadTexture(RESOURCE_PATH::TEXTURES, "asphalt.jpg");
+  LoadTexture(RESOURCE_PATH::TEXTURES, "grass.jpg");
 
   LoadTexture(RESOURCE_PATH::TEXTURES, "building1.jpg");
   LoadTexture(RESOURCE_PATH::TEXTURES, "building2.jpg");
